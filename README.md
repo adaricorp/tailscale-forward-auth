@@ -1,9 +1,20 @@
 # tailscale-forward-auth
 
-This is a basic example of how to implement a Tailscale authentication server
-for general use with proxies. It is derived from the [Tailscale nginx-auth
-command](https://github.com/tailscale/tailscale/blob/741ae9956e674177687062b5499a80db83505076/cmd/nginx-auth/README.md),
-but it is decoupled from NGINX and packaged in a Docker image.
+A Tailscale authentication server for general use with the
+[Traefik proxy ForwardAuth middleware](https://doc.traefik.io/traefik/middlewares/http/forwardauth/).
+
+It was derived from the
+[Tailscale nginx-auth command](https://github.com/tailscale/tailscale/blob/741ae9956e674177687062b5499a80db83505076/cmd/nginx-auth/README.md),
+but it is decoupled from NGINX and packaged as a Docker image.
+
+This particular project started as a fork of the
+[tailscale-forward-auth example](https://github.com/kevin-hanselman/tailscale-forward-auth).
+
+The major differences from the original project are:
+
+- Permit tagged nodes and include a Tailscale-Acl-Tags header.
+
+- Bring in major fixes from [nginx-auth](https://github.com/tailscale/tailscale/tree/main/cmd/nginx-auth). Thanks go to @lox for [starting this work](https://github.com/lox/tailscale-forward-auth).
 
 ## Traefik example
 
@@ -26,27 +37,28 @@ From the same machine, send an HTTP request to the proxied application using
 its local IP address. You should receive a 401 error:
 
 ```
-$ curl -v localhost/echo
-*   Trying 127.0.0.1:80...
-* Connected to localhost (127.0.0.1) port 80 (#0)
+$ curl -v localhost:81/echo
+*   Trying 127.0.0.1:81...
+* Connected to localhost (127.0.0.1) port 81 (#0)
 > GET /echo HTTP/1.1
-> Host: localhost
-> User-Agent: curl/7.83.0
+> Host: localhost:81
+> User-Agent: curl/7.81.0
 > Accept: */*
 >
 * Mark bundle as not supporting multiuse
 < HTTP/1.1 401 Unauthorized
 < Content-Length: 0
-< Date: Sat, 07 May 2022 18:44:39 GMT
+< Date: Mon, 04 Dec 2023 21:11:53 GMT
 <
 * Connection #0 to host localhost left intact
+
 ```
 
 Now send an HTTP request using the Tailscale IP. You should now receive
 a response from your echo server. Note the added `Tailscale-` fields:
 
 ```
-$ curl $(tailscale ip -4)/echo
+$ curl $(tailscale ip -4):81/echo
 {
   "Accept": [
     "*/*"
