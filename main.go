@@ -67,12 +67,6 @@ func main() {
 			return
 		}
 
-		if len(info.Node.Tags) != 0 {
-			w.WriteHeader(http.StatusForbidden)
-			log.Printf("node %s is tagged", info.Node.Hostinfo.Hostname())
-			return
-		}
-
 		// tailnet of connected node. When accessing shared nodes, this
 		// will be empty because the tailnet of the sharee is not exposed.
 		var tailnet string
@@ -94,12 +88,28 @@ func main() {
 			return
 		}
 
+		userHeader := info.UserProfile.LoginName
+		loginHeader := strings.Split(info.UserProfile.LoginName, "@")[0]
+		nameHeader := info.UserProfile.DisplayName
+		profilePictureHeader := info.UserProfile.ProfilePicURL
+		// Deviate from nginx-auth and original traefik-forward-auth by permitting a
+		// tagged node. Include its tags in a header.
+		var aclTagsHeader string
+		if info.Node.IsTagged() {
+			aclTagsHeader = strings.Join(info.Node.Tags, ",")
+		}
+
 		h := w.Header()
-		h.Set("Tailscale-Login", strings.Split(info.UserProfile.LoginName, "@")[0])
-		h.Set("Tailscale-User", info.UserProfile.LoginName)
-		h.Set("Tailscale-Name", info.UserProfile.DisplayName)
-		h.Set("Tailscale-Profile-Picture", info.UserProfile.ProfilePicURL)
 		h.Set("Tailscale-Tailnet", tailnet)
+		h.Set("Tailscale-Login", loginHeader)
+		h.Set("Tailscale-User", userHeader)
+		h.Set("Tailscale-Name", nameHeader)
+		if profilePictureHeader != "" {
+			h.Set("Tailscale-Profile-Picture", profilePictureHeader)
+		}
+		if aclTagsHeader != "" {
+			h.Set("Tailscale-Acl-Tags", aclTagsHeader)
+		}
 		w.WriteHeader(http.StatusNoContent)
 	})
 
