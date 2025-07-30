@@ -15,7 +15,7 @@ import (
 	"net/url"
 	"strings"
 
-	"tailscale.com/client/tailscale"
+	tailscale "tailscale.com/client/local"
 )
 
 var (
@@ -59,7 +59,7 @@ func main() {
 			return
 		}
 
-		client := &tailscale.LocalClient{}
+		client := &tailscale.Client{}
 		info, err := client.WhoIs(r.Context(), remoteAddr.String())
 		if err != nil {
 			w.WriteHeader(http.StatusUnauthorized)
