@@ -1,6 +1,6 @@
 module github.com/adaricorp/tailscale-forward-auth
 
-go 1.24
+go 1.24.4
 
 require (
 	github.com/prometheus/common v0.55.0
@@ -28,7 +28,7 @@ require (
 	golang.org/x/crypto v0.38.0 // indirect
 	golang.org/x/exp v0.0.0-20250210185358-939b2ce775ac // indirect
 	golang.org/x/net v0.40.0 // indirect
-	golang.org/x/sync v0.14.0 // indirect
+	golang.org/x/sync v0.16.0 // indirect
 	golang.org/x/sys v0.33.0 // indirect
 	golang.org/x/text v0.25.0 // indirect
 	golang.zx2c4.com/wireguard/windows v0.5.3 // indirect
