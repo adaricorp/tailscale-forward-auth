@@ -8,13 +8,16 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"net"
 	"net/http"
 	"net/netip"
 	"net/url"
+	"os"
 	"strings"
 
+	"github.com/prometheus/common/version"
 	tailscale "tailscale.com/client/local"
 )
 
@@ -24,10 +27,17 @@ var (
 	headerRemoteIP   = flag.String("remote-ip-header", "X-Forwarded-For", "HTTP header field containing the remote IP")
 	headerRemotePort = flag.String("remote-port-header", "X-Forwarded-Port", "HTTP header field containing the remote port")
 	debug            = flag.Bool("debug", false, "enable debug logging")
+	printVersion = flag.Bool("version", false, "print version")
 )
 
 func main() {
 	flag.Parse()
+
+	if *printVersion {
+		fmt.Printf("tailscale_forward_auth v%s built on %s\n", version.Version, version.BuildDate)
+		os.Exit(0)
+	}
+
 	if *listenAddr == "" {
 		log.Fatal("listen address not set")
 	}
