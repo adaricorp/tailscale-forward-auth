@@ -4,7 +4,7 @@ go 1.25.3
 
 require (
 	github.com/prometheus/common v0.67.3
-	tailscale.com v1.90.6
+	tailscale.com v1.90.8
 )
 
 require (
