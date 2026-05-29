@@ -3,7 +3,7 @@ module github.com/adaricorp/tailscale-forward-auth
 go 1.26.3
 
 require (
-	github.com/prometheus/common v0.67.5
+	github.com/prometheus/common v0.68.0
 	tailscale.com v1.98.4
 )
 
