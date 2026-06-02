@@ -1,6 +1,6 @@
 module github.com/adaricorp/tailscale-forward-auth
 
-go 1.26.3
+go 1.26.4
 
 require (
 	github.com/prometheus/common v0.68.0
