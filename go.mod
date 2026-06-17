@@ -4,7 +4,7 @@ go 1.26.4
 
 require (
 	github.com/prometheus/common v0.69.0
-	tailscale.com v1.98.5
+	tailscale.com v1.100.0
 )
 
 require (
@@ -13,7 +13,7 @@ require (
 	github.com/coder/websocket v1.8.15 // indirect
 	github.com/dblohm7/wingoes v0.0.0-20240119213807-a09d6be7affa // indirect
 	github.com/fxamacker/cbor/v2 v2.9.2 // indirect
-	github.com/go-json-experiment/json v0.0.0-20250813024750-ebf49471dced // indirect
+	github.com/go-json-experiment/json v0.0.0-20260214004413-d219187c3433 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/hdevalence/ed25519consensus v0.2.0 // indirect
 	github.com/jsimonetti/rtnetlink v1.4.2 // indirect
