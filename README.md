@@ -1,3 +1,11 @@
+> [!IMPORTANT]
+> **Retired (2026-07):** replaced by the `tailscale` portal of
+> [ItalyPaleAle/traefik-forward-auth](https://github.com/ItalyPaleAle/traefik-forward-auth) v4
+> (see [adaricorp/adarigod#1984](https://github.com/adaricorp/adarigod/pull/1984),
+> which also fixes the memory leak tracked in adaricorp/adarigod#1250).
+> This repository is archived; releases remain available for installs
+> that predate the swap. No further releases will be made.
+
 # tailscale-forward-auth
 
 A Tailscale authentication server for general use with the
